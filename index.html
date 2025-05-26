@@ -55,10 +55,12 @@
       left: 20px;
       right: 20px;
       text-align: center;
-      font-size: 18px;
-      color: #d63384;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #ff4d6d;
       z-index: 1;
       font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
     }
 
     canvas {
@@ -78,6 +80,28 @@
   from { opacity: 0; transform: scale(0.9) translate(-50%, -50%); }
   to { opacity: 1; transform: scale(1) translate(-50%, -50%); }
 }
+.love-quote-btn {
+  margin-top: 200px;
+  padding: 10px 20px;
+  background-color: #ff66a3;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.love-quote-btn:hover {
+  background-color: #e55c97;
+}
+
+.quote-box {
+  margin-top: 15px;
+  color: #ff4d6d;
+  font-size: 25px;
+  text-shadow: 1px 1px 2px #000;
+}
+
 
   </style>
 </head>
@@ -119,6 +143,8 @@
   <h2 style="color: #d63384; font-size: 28px; margin: 0;">I ❤️ You</h2>
 </div>
 
+<button class="love-quote-btn" onclick="showRandomQuote()">❤️ Click for a Surprise</button>
+<div id="loveQuote" class="quote-box"></div>
 
 
 <script>
@@ -142,7 +168,7 @@ window.addEventListener("load", () => {
     function scratch(x, y) {
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(x, y, 15, 0, Math.PI * 2);
+      ctx.arc(x, y, 25, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -173,6 +199,17 @@ window.addEventListener("load", () => {
     }, { passive: false });
   });
 });
+const quotes = [
+    "Tum muskura do toh lagta hai zindagi jeet gayi 💫",
+    "Tera naam leke hi dil dhadakta hai ❤️",
+    "Kamal tumhara hai – hamesha ke liye 💍",
+    "Tu muskura de, toh sab kuch theek ho jaye 💖"
+  ];
+
+  function showRandomQuote() {
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("loveQuote").innerText = quote;
+  }
 </script>
 
 
