@@ -130,6 +130,7 @@
     ctx.fillStyle = "#c0c0c0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Mouse Events
     canvas.addEventListener("mousedown", () => isDrawing = true);
     canvas.addEventListener("mouseup", () => isDrawing = false);
     canvas.addEventListener("mouseout", () => isDrawing = false);
@@ -143,6 +144,29 @@
       ctx.beginPath();
       ctx.arc(x, y, 15, 0, Math.PI * 2);
       ctx.fill();
+    });
+
+    // Touch Events (for mobile)
+    canvas.addEventListener("touchstart", (e) => {
+      isDrawing = true;
+      e.preventDefault(); // Prevent scrolling
+    });
+
+    canvas.addEventListener("touchend", () => {
+      isDrawing = false;
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, Math.PI * 2);
+      ctx.fill();
+      e.preventDefault(); // Again prevent scrolling while scratching
     });
   });
   window.addEventListener("load", () => {
