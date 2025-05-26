@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scratch Card for You</title>
+  <style>
+    body {
+      background: url('bg5.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 10px;
+      margin: 0;
+      color: #fff;
+    }
+
+    h2 {
+      color: #fff8f0;
+      text-shadow: 1px 1px 4px #000;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 22px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .scratch-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .scratch-box {
+      position: relative;
+      width: 250px;
+      height: 150px;
+      border: 2px dashed #ff69b4;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .message {
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      right: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #d63384;
+      z-index: 1;
+      font-weight: bold;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+    @keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9) translate(-50%, -50%); }
+  to { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+}
+
+  </style>
+</head>
+<body>
+
+<h2>“Kya aapko isse dekh ke accha laga?”</h2>
+
+<div class="question">Agar Hnn then Scratch karo aur dekho tumhare 'haan' pe kya milega!</div>
+
+<div class="scratch-container">
+  <div class="scratch-box">
+    <div class="message">1 Unlimited Smile Pass</div>
+    <canvas width="250" height="150"></canvas>
+  </div>
+  <div class="scratch-box">
+    <div class="message">1 Tight Hug</div>
+    <canvas width="250" height="150"></canvas>
+  </div>
+  <div class="scratch-box">
+    <div class="message">Kamal ka dil – tumhara hamesha ke liye</div>
+    <canvas width="250" height="150"></canvas>
+  </div>
+</div>
+
+<div id="lovePopup" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 192, 203, 0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  text-align: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-in-out;
+">
+  <h2 style="color: #d63384; font-size: 28px; margin: 0;">I ❤️ You</h2>
+</div>
+
+
+
+<script>
+  document.querySelectorAll(".scratch-box").forEach(box => {
+    const canvas = box.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    let isDrawing = false;
+
+    ctx.fillStyle = "#c0c0c0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    canvas.addEventListener("mousedown", () => isDrawing = true);
+    canvas.addEventListener("mouseup", () => isDrawing = false);
+    canvas.addEventListener("mouseout", () => isDrawing = false);
+
+    canvas.addEventListener("mousemove", e => {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  });
+  window.addEventListener("load", () => {
+  const popup = document.getElementById("lovePopup");
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 3000); // 3 seconds
+});
+
+</script>
+
+</body>
+</html>
